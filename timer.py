@@ -73,7 +73,6 @@ def run_timer(timers, expr):
             sys.stdout.write(f"\rtimer {format_time(int(remaining))}")
             sys.stdout.flush()
             time.sleep(1)
-            
             # non-blocking input (linux only)
             import select
             if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
