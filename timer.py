@@ -6,11 +6,13 @@ from datetime import datetime, timedelta
 def parse_timer(expr):
     expr = expr.strip()
     expr = expr.strip('{}').replace(' ', '')
+    
     # handle comma-separated work/break timers
     if ',' in expr:
         work, break_ = expr.split(',')
         work_timers = _parse_math(work)
         break_timers = _parse_math(break_)
+        
         # interleave work and break timers
         timers = []
         for w, b in zip(work_timers, break_timers + [break_timers[-1]]*(len(work_timers)-len(break_timers))):
@@ -21,6 +23,7 @@ def parse_timer(expr):
         return _parse_math(expr)
 
 def _parse_math(expr):
+    
     # multiplication and subtraction
     if 'x' in expr:
         parts = expr.split('x')
@@ -32,6 +35,7 @@ def _parse_math(expr):
                 nums.append(-sub)
             else:
                 nums.append(int(p))
+                
         # if subtraction is at the end
         if '-' in parts[-1]:
             base, sub = map(int, parts[-1].split('-'))
@@ -39,6 +43,7 @@ def _parse_math(expr):
             subtract = sub
         else:
             subtract = 0
+            
         # calculate sequence
         timers = []
         val = nums[0]
@@ -73,6 +78,7 @@ def run_timer(timers, expr):
             sys.stdout.write(f"\rtimer {format_time(int(remaining))}")
             sys.stdout.flush()
             time.sleep(1)
+            
             # non-blocking input (linux only)
             import select
             if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
@@ -101,6 +107,7 @@ def main():
     except Exception as e:
         print(f"Error: {e}")
         return
+        
     sys_time = datetime.now().strftime('%H:%M:%S')
     start_time = datetime.now().strftime('%H:%M:%S')
     end_time = (datetime.now() + timedelta(minutes=sum(timers))).strftime('%H:%M:%S')
