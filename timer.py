@@ -2,6 +2,9 @@ import re
 import sys
 import time
 from datetime import datetime, timedelta
+import os
+if os.name == 'nt':
+    import msvcrt
 
 def parse_timer(expr):
     expr = expr.strip()
@@ -78,11 +81,16 @@ def run_timer(timers, expr):
             sys.stdout.write(f"\rtimer {format_time(int(remaining))}")
             sys.stdout.flush()
             time.sleep(1)
-            
-            # non-blocking input (linux only)
-            import select
-            if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
-                inp = sys.stdin.readline().strip()
+
+            inp = None
+            if os.name == 'nt':
+                if msvcrt.kbhit():
+                    inp = msvcrt.getwch()
+            else:
+                import select
+                if sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
+                    inp = sys.stdin.readline().strip()
+            if inp:
                 if inp == 'q':
                     print("\nquitting.")
                     return

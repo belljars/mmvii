@@ -1,6 +1,5 @@
 import ast
 import operator
-import readline
 import re
 import warnings
 
