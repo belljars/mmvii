@@ -13,4 +13,4 @@ example of timer.py, with 45 minutes of work time with a 5 minute break each tim
 - timer.py
 
 ### work in progress/design phase
-- powershell implemention
+- proper windows implemention
