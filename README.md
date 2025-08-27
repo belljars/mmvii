@@ -9,5 +9,4 @@ a bunch of simple applications created with python for the sake of just working 
 - timer.py
 
 ### work in progress/design phase
-- minimalist terminal excel sheet
-- scientific-based menstruation tracker 
+- powershell implemention
