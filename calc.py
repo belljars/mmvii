@@ -1,5 +1,6 @@
 import ast
 import operator
+import readline
 import re
 import warnings
 
@@ -43,8 +44,8 @@ def eval_expr(expr, local_vars=None):
 def _eval(node, local_vars):
 
     # recursive evaluation of AST nodes
-    if isinstance(node, ast.Num):
-        return node.n
+    if isinstance(node, ast.Constant):  # updated from ast.Num to ast.Constant
+        return node.value  # updated from node.n to node.value
     elif isinstance(node, ast.BinOp):
         left = _eval(node.left, local_vars)
         right = _eval(node.right, local_vars)
